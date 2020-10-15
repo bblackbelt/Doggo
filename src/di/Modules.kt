@@ -1,8 +1,11 @@
 package com.doggo.di
 
 import com.doggo.adapter.BreedsAdapter
+import com.doggo.adapter.DoggoAdapter
 import com.doggo.controllers.BreedsController
+import com.doggo.controllers.DoggoController
 import com.doggo.domain.BreedsService
+import com.doggo.domain.DoggoService
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.apache.Apache
 import io.ktor.client.features.BrowserUserAgent
@@ -18,6 +21,12 @@ val breedsModule = module {
     factory<BreedsService> { BreedsService.Impl(get()) }
     factory<BreedsController> { BreedsController.Impl(get(), get()) }
     factory<BreedsAdapter> { BreedsAdapter.Impl() }
+}
+
+val doggosModule = module {
+    factory<DoggoService> { DoggoService.Impl(get()) }
+    factory<DoggoController> { DoggoController.Impl(get(), get()) }
+    factory<DoggoAdapter> { DoggoAdapter.Impl() }
 }
 
 val networkModule = module {

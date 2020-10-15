@@ -1,17 +1,17 @@
 package com.doggo.adapter
 
 import com.doggo.adapter.model.Breed
-import com.doggo.domain.model.BreedModelDto
+import com.doggo.domain.model.BreedDto
 
 interface BreedsAdapter {
 
-    fun getBreed(breedModelDto: BreedModelDto): Breed
-    fun getBreeds(breedModelDto: List<BreedModelDto>): List<Breed>
+    fun getBreed(breedDto: BreedDto): Breed
+    fun getBreeds(breedDto: List<BreedDto>): List<Breed>
 
     class Impl : BreedsAdapter {
-        override fun getBreed(breedModelDto: BreedModelDto): Breed = with(breedModelDto) {
+        override fun getBreed(breedDto: BreedDto): Breed = with(breedDto) {
            Breed(id, name, lifeSpan, temperament ?: "c")
         }
-        override fun getBreeds(breedModelDto: List<BreedModelDto>): List<Breed> = breedModelDto.map { getBreed(it) }
+        override fun getBreeds(breedDto: List<BreedDto>): List<Breed> = breedDto.map { getBreed(it) }
     }
 }

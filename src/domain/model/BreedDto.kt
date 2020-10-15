@@ -2,7 +2,7 @@ package com.doggo.domain.model
 
 import com.google.gson.annotations.SerializedName
 
-data class BreedModelDto(
+data class BreedDto(
     val id: String,
     val name: String,
     val breed_group: String?,

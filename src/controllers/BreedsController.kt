@@ -3,7 +3,6 @@ package com.doggo.controllers
 import com.doggo.adapter.BreedsAdapter
 import com.doggo.adapter.model.Breed
 import com.doggo.domain.BreedsService
-import com.doggo.domain.model.BreedModelDto
 
 
 interface BreedsController {

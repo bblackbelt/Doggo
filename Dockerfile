@@ -1,14 +1,19 @@
-FROM openjdk:8-jre-alpine
+FROM gradle:6.6.1-jdk14 as builder
 
-ENV APPLICATION_USER ktor
-RUN adduser -D -g '' $APPLICATION_USER
+# Copy local code to the container image.
+COPY build.gradle .
+COPY gradle.properties .
+COPY settings.gradle .
+COPY src ./src
+COPY resources ./resources
 
-RUN mkdir /app
-RUN chown -R $APPLICATION_USER /app
+# Build a release artifact.
+RUN gradle clean build --no-daemon
 
-USER $APPLICATION_USER
+FROM adoptopenjdk/openjdk14:alpine-slim
 
-COPY ./build/libs/doggo-0.0.1.jar /app/doggo-0.0.1.jar
-WORKDIR /app
+# Copy the jar to the production image from the builder stage.
+COPY --from=builder /home/gradle/build/libs/doggo-0.0.1-all.jar /doggo-0.0.1.jar
 
-CMD ["java", "-server", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseCGroupMemoryLimitForHeap", "-XX:InitialRAMFraction=2", "-XX:MinRAMFraction=2", "-XX:MaxRAMFraction=2", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "doggo-0.0.1.jar"]
+# Run the web service on container startup.
+CMD ["java", "-server", "-jar", "doggo-0.0.1.jar"]

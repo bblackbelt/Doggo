@@ -16,30 +16,19 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 
 interface BreedsService {
-    class Impl: BreedsService {
-        private val client: HttpClient by lazy {
-            HttpClient(Apache) {
-                install(JsonFeature) {
-                    serializer = GsonSerializer()
-                }
-                install(Logging) {
-                    level = LogLevel.HEADERS
-                }
-                BrowserUserAgent() // install default browser-like user-agent
-                // install(UserAgent) { agent = "some user agent" }
-                defaultRequest {
-                    header("x-api-key", "2f5b39cb-93c5-47f5-9507-c1e9d2b94dd0")
-                }
-            }
-        }
-
+    class Impl(private val client: HttpClient): BreedsService {
         override suspend fun getBreeds(): List<BreedModelDto> {
             return client.get {
                 url("https://api.thedogapi.com/v1/breeds")
                 contentType(ContentType.Application.Json)
             }
         }
+
+        override fun close() {
+            client.close()
+        }
     }
 
     suspend fun getBreeds(): List<BreedModelDto>
+    fun close()
 }

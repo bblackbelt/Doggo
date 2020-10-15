@@ -2,6 +2,7 @@ package com.doggo.setup
 
 import com.doggo.controllers.BreedsController
 import com.doggo.di.breedsModule
+import com.doggo.di.networkModule
 import com.doggo.domain.BreedsService
 import com.doggo.router.breedsRouting
 import io.ktor.application.Application
@@ -23,7 +24,7 @@ private const val SERVER_PORT = 8080
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
     koin {
-        modules(breedsModule)
+        modules(breedsModule, networkModule)
     }
     install(CallLogging) {
         level = Level.INFO

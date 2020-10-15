@@ -21,7 +21,7 @@ private const val SERVER_PORT = 8080
 
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
-fun Application.module() {
+fun Application.module(testing: Boolean = false) {
     koin {
         modules(breedsModule)
     }

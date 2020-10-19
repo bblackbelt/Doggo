@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doggos
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: doggos-app
+  template:
+    metadata:
+      labels:
+        app: doggos-app
+    spec:
+      containers:
+        - name: doggos-app
+          image: gcr.io/doggos-293010/doggo:18c53c073a0f88f0216d90029ca89ddcfc20a625
+          ports:
+            - containerPort: 8080
+          env:
+            - name: PORT
+              value: "8080"

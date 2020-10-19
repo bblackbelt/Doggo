@@ -29,3 +29,11 @@ fun Routing.doggosRouting(doggoController: DoggoController) {
         }
     }
 }
+
+fun Routing.health() {
+    route("/health") {
+        get {
+            call.respond("I am alive")
+        }
+    }
+}

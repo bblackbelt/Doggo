@@ -7,6 +7,7 @@ import com.doggo.di.doggosModule
 import com.doggo.di.networkModule
 import com.doggo.router.breedsRouting
 import com.doggo.router.doggosRouting
+import com.doggo.router.health
 import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.features.CallLogging
@@ -40,5 +41,6 @@ fun Application.module(testing: Boolean = false) {
     install(Routing) {
         breedsRouting(breedsController)
         doggosRouting(doggoController)
+        health()
     }
 }
